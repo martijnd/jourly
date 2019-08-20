@@ -1,0 +1,3 @@
+<ul *ngIf="workdays$ | async as workdays;">
+  <li *ngFor="let workDay of workdays">{{ workDay.date }}</li>
+</ul>
