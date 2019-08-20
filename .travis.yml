@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: required
+branches:
+  only:
+    - master
+before_script:
+  - npm install -g @angular/cli
+  - npm install -g ng-tailwindcss
+script:
+  - ng lint
+  - npm run build-ci
+  - npm run test-headless
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/boater
+  on:
+    branch: master
