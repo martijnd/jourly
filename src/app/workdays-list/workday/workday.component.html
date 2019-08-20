@@ -1,1 +1,11 @@
-<p>workday works!</p>
+<div class="card bg-white rounded-sm p-4 shadow-xl border-green-500 border-t-4 my-4">
+  <div class="card-body">
+    <div class="card-title font-bold flex justify-between">
+      <span>{{ workday.date | date: 'fullDate':'GMT+2':'nl_NL'  }}</span><span (click)="onDelete(workday)">x</span>
+    </div>
+    <div class="card-subtitle uppercase text-gray-500">{{ workday.category }}</div>
+    <div class="description">
+      {{ workday.description }}
+    </div>
+  </div>
+</div>

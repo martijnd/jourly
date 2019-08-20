@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {WorkDay} from '../services/workday.model';
 import {Observable, of} from 'rxjs';
 import {AuthService} from '../services/auth.service';
@@ -12,21 +12,34 @@ import {switchMap} from 'rxjs/operators';
   styleUrls: ['./workdays-list.component.scss']
 })
 export class WorkdaysListComponent implements OnInit {
+  workdaysCollection: AngularFirestoreCollection<WorkDay>;
   workdays$: Observable<WorkDay[]>;
 
-  constructor(private afs: AngularFirestore, auth: AuthService) {
+  constructor(private afs: AngularFirestore, private auth: AuthService) {
     this.workdays$ = auth.user$.pipe(switchMap(user => {
       if (user) {
-        return afs.doc<User>(`users/${user.uid}`).collection<WorkDay[]>('workdays').valueChanges();
+        this.workdaysCollection = afs.doc<User>(`users/${user.uid}`).collection<WorkDay>('workdays', ref => ref.orderBy('date', 'desc'));
+        return this.workdaysCollection.valueChanges();
       } else {
         return of(null);
       }
+
     }));
   }
 
-  // addWorkday(workday: WorkDay) {
-  //   this.workdaysCollection.add(workday);
-  // }
+  addWorkday(workday: WorkDay) {
+    const workdayId = this.afs.createId();
+    this.workdaysCollection.doc(workdayId).set({
+      uid: workdayId,
+      ...workday
+    }).then(response => console.log(response)).catch(err => console.log(err));
+  }
+
+  onDeleteWorkday(workday: WorkDay) {
+    this.workdaysCollection.doc(workday.uid).delete()
+      .then(() => console.log('Werkdag van ', workday.date, 'succesvol verwijderd!'))
+      .catch(error => alert(error));
+  }
 
   ngOnInit() {
   }

@@ -6,4 +6,8 @@
   color: red;
 }
 
+.validation-block {
+  @apply text-red-400 italic text-sm font-bold block;
+}
+
 @tailwind utilities;

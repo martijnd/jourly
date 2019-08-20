@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {WorkDay} from '../../services/workday.model';
 
 @Component({
   selector: 'app-workday',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workday.component.scss']
 })
 export class WorkdayComponent implements OnInit {
+  @Input() workday: WorkDay;
+  @Output() deleteWorkday = new EventEmitter<WorkDay>();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  onDelete(workday) {
+    this.deleteWorkday.emit(workday);
   }
 
 }
