@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit {
   @Output() toggleForm = new EventEmitter();
   loading = true;
 
-  constructor(private auth: AuthService) {
+  constructor(public auth: AuthService) {
     auth.user$.subscribe(() => {
       this.loading = false;
     });

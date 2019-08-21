@@ -7,14 +7,10 @@ import {AuthService} from './services/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  constructor(public auth: AuthService) {}
   showForm = false;
 
   setToggleForm() {
     this.showForm = !this.showForm;
-    console.log(this.showForm);
   }
-
-  constructor(private auth: AuthService) {
-  }
-
 }
