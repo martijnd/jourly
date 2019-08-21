@@ -10,12 +10,17 @@ import {WorkDay} from '../../services/workday.model';
 export class WorkdayFormComponent implements OnInit {
   @Output() submitForm = new EventEmitter<WorkDay>();
   form: FormGroup;
+  showForm = false;
 
   constructor() {
   }
 
   onSubmit() {
     this.submitForm.emit(this.form.value);
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
   }
 
   ngOnInit() {

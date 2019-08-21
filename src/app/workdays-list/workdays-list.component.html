@@ -1,8 +1,7 @@
-<div class="container mx-auto" *ngIf="workdays$ | async as workdays;" style="max-width: 600px;">
+<app-workday-form (submitForm)="addWorkday($event)"></app-workday-form>
 
-  <app-workday-form (submitForm)="addWorkday($event)"></app-workday-form>
+<div class="container mx-auto" *ngIf="workdays$ | async as workdays;" style="max-width: 600px;">
   <app-workday *ngFor="let workDay of workdays" [workday]="workDay"
                (deleteWorkday)="onDeleteWorkday($event)"></app-workday>
-
 </div>
 

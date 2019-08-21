@@ -1,3 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @import "./custom-forms.css";
 @import "./styles.css";
+
+button[disabled] {
+  cursor: not-allowed;
+}
+
+.rotated {
+  transform: rotate(180deg);
+}

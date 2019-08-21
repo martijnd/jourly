@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {WorkDay} from '../services/workday.model';
 import {Observable, of} from 'rxjs';
@@ -12,6 +12,7 @@ import {switchMap} from 'rxjs/operators';
   styleUrls: ['./workdays-list.component.scss']
 })
 export class WorkdaysListComponent implements OnInit {
+  @Input() showForm;
   workdaysCollection: AngularFirestoreCollection<WorkDay>;
   workdays$: Observable<WorkDay[]>;
 

@@ -4,15 +4,25 @@
      backgroundSize: '50% 100%',
      backgroundRepeat: 'no-repeat'}">
   <div class="self-center text-white font-bold text-2xl">Jourly</div>
-  <img *ngIf="auth.user$ | async as user; else login;" [src]="user.photoURL"
-       class="avatar rounded-full h-10 cursor-pointer"
-       alt="avatar"
-       (click)="auth.signOut()"/>
+  <div class="flex self-center">
+    <button class="px-4 py-2 mr-4 rounded bg-indigo-600 text-white font-semibold shadow"
+            (click)="onToggleForm()">Nieuwe
+      werkdag
+    </button>
+    <img *ngIf="auth.user$ | async as user; else notLoggedIn;" [src]="user.photoURL"
+         class="avatar rounded-full h-10 cursor-pointer inline-block"
+         alt="avatar"
+         (click)="auth.signOut()"/>
 
+    <ng-template #notLoggedIn>
+      <div class="rounded-full bg-gray-300 h-10 w-10 inline-block" *ngIf="loading; else login;"></div>
+    </ng-template>
+    <ng-template #login>
+      <button class="button text-white cursor-pointer" (click)="auth.googleSignIn()">Login with Google
+      </button>
+    </ng-template>
+  </div>
 
-  <ng-template #login>
-    <button class="button text-white cursor-pointer" (click)="auth.googleSignIn()">Login with Google</button>
-  </ng-template>
 
 </nav>
 
