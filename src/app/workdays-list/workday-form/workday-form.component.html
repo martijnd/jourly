@@ -3,6 +3,7 @@
   <div class="input-group mb-4">
     <label for="date" class="mb-1 block font-bold text-gray-500 uppercase">Datum</label>
     <input id="date" class="form-input rounded-lg border-primary-light w-full" type="date" name="date"
+           [value]="date | date:'yyyy-MM-dd'"
            formControlName="date">
     <span *ngIf="!form.get('date').valid && form.get('date').touched"
           class="validation-block">Dit veld is verplicht!</span>
