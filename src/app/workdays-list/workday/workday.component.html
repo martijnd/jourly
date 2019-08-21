@@ -1,11 +1,10 @@
-<div class="card my-4 p-4 bg-white rounded shadow-xl border-green-500 border-t-4">
+<div class="card my-8 py-4 bg-white rounded-lg shadow-xl border-green-500 border-t-4">
   <div class="card-body">
-    <div class="card-title font-bold flex justify-between">
+    <div class="card-title px-8 font-bold flex justify-between">
       <span>{{ workday.date | date: 'fullDate':'GMT+2':'nl_NL'  }}</span><span (click)="onDelete(workday)">x</span>
     </div>
-    <div class="card-subtitle uppercase text-gray-500">{{ workday.category }}</div>
-    <div class="description">
-      {{ workday.description }}
+    <div class="card-subtitle px-8 mb-2 uppercase text-gray-500">{{ workday.category }}</div>
+    <div class="description mt-2 p-8 markdown-body bg-gray-100" [innerHTML]="parsedDescription" style="color: #2D3748;">
     </div>
   </div>
 </div>

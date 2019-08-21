@@ -1,29 +1,41 @@
-<form class="p-8 mb-4 bg-white rounded shadow-md" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="showForm">
-  <h2 class="mb-4 text-2xl font-medium ">Nieuwe werkdag</h2>
-  <div class="input-group mb-4">
-    <label for="date" class="mb-1 block font-bold text-gray-500 uppercase">Datum</label>
-    <input id="date" class="form-input rounded-lg border-primary-light w-full" type="date" name="date"
-           [value]="date | date:'yyyy-MM-dd'"
-           formControlName="date">
-    <span *ngIf="!form.get('date').valid && form.get('date').touched"
-          class="validation-block">Dit veld is verplicht!</span>
+<div class="container mx-auto flex p-8 w-full bg-white rounded shadow-md">
+
+  <form class="w-full md:w-1/2 inline-block" [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+    <h2 class="mb-4 text-2xl font-medium">Nieuwe werkdag</h2>
+    <div class="input-group mb-4">
+      <label for="date" class="mb-1 block font-bold text-gray-500 uppercase">Datum</label>
+      <input id="date" class="form-input rounded-lg border-primary-light w-full" type="date" name="date"
+             [value]="date | date:'yyyy-MM-dd'"
+             formControlName="date">
+      <span *ngIf="!form.get('date').valid && form.get('date').touched"
+            class="validation-block">Dit veld is verplicht!</span>
+    </div>
+    <div class="input-group mb-4">
+      <label for="description" class="mb-1 block font-bold text-gray-500 uppercase">Beschrijving</label>
+      <textarea (input)="onTextAreaChange($event.target.value)" id="description"
+                class="form-textarea rounded-lg border-primary-light w-full"
+                type="text"
+                placeholder="Beschrijving in Markdown"
+                name="description"
+                rows="10"
+                formControlName="description"></textarea>
+      <span *ngIf="!form.get('description').valid && form.get('description').touched"
+            class="validation-block">Dit veld is verplicht!</span>
+    </div>
+    <div class="input-group mb-4">
+      <label for="category" class="mb-1 block font-bold text-gray-500 uppercase">Categorie</label>
+      <input id="category" class="form-input rounded-lg border-primary-light w-full" type="text" name="category"
+             formControlName="category">
+      <span *ngIf="!form.get('category').valid && form.get('category').touched"
+            class="validation-block">Dit veld is verplicht!</span>
+    </div>
+    <button class="px-4 py-2 rounded-sm text-gray-600 bg-primary-light font-bold uppercase w-full" type="submit"
+            [disabled]="!form.valid || !form.dirty">Toevoegen
+    </button>
+  </form>
+
+  <div class="w-full md:w-1/2 p-4  inline-block markdown-body" [innerHTML]="compiledMarkdown">
   </div>
-  <div class="input-group mb-4">
-    <label for="description" class="mb-1 block font-bold text-gray-500 uppercase">Beschrijving</label>
-    <textarea id="description" class="form-textarea rounded-lg border-primary-light w-full" type="text"
-              name="description"
-              formControlName="description"></textarea>
-    <span *ngIf="!form.get('description').valid && form.get('description').touched"
-          class="validation-block">Dit veld is verplicht!</span>
-  </div>
-  <div class="input-group mb-4">
-    <label for="category" class="mb-1 block font-bold text-gray-500 uppercase">Categorie</label>
-    <input id="category" class="form-input rounded-lg border-primary-light w-full" type="text" name="category"
-           formControlName="category">
-    <span *ngIf="!form.get('category').valid && form.get('category').touched"
-          class="validation-block">Dit veld is verplicht!</span>
-  </div>
-  <button class="px-4 py-2 rounded-sm text-gray-600 bg-primary-light font-bold uppercase w-full" type="submit"
-          [disabled]="!form.valid || !form.dirty">Toevoegen
-  </button>
-</form>
+
+</div>

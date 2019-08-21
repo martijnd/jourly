@@ -2,6 +2,9 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {WorkDay} from '../../services/workday.model';
 
+import marked from 'marked';
+import DOMPurify from 'dompurify';
+
 @Component({
   selector: 'app-workday-form',
   templateUrl: './workday-form.component.html',
@@ -10,10 +13,17 @@ import {WorkDay} from '../../services/workday.model';
 export class WorkdayFormComponent implements OnInit {
   @Output() submitForm = new EventEmitter<WorkDay>();
   @Input() showForm: boolean;
+  compiledMarkdown;
   form: FormGroup;
   date = new Date();
 
   constructor() {
+  }
+
+  compileMarkdown = (value: string): string => marked(value);
+
+  onTextAreaChange(description) {
+    this.compiledMarkdown = DOMPurify.sanitize(this.compileMarkdown(description));
   }
 
   onSubmit() {
