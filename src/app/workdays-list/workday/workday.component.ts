@@ -10,7 +10,7 @@ import marked from 'marked';
 })
 export class WorkdayComponent implements OnInit {
   @Input() workday: WorkDay;
-  @Output() deleteWorkday = new EventEmitter<WorkDay>();
+  @Output() showModal = new EventEmitter<WorkDay>();
 
   parsedDescription: string;
 
@@ -18,12 +18,11 @@ export class WorkdayComponent implements OnInit {
 
   }
 
+  onShowModal(workday) {
+    this.showModal.emit(workday);
+  }
+
   ngOnInit() {
     this.parsedDescription = marked(this.workday.description);
   }
-
-  onDelete(workday) {
-    this.deleteWorkday.emit(workday);
-  }
-
 }

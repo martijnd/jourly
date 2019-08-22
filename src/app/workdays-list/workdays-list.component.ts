@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {WorkDay} from '../services/workday.model';
 import {Observable, of} from 'rxjs';
@@ -13,8 +13,11 @@ import {switchMap} from 'rxjs/operators';
 })
 export class WorkdaysListComponent implements OnInit {
   @Input() showForm;
+  @Output() closeForm = new EventEmitter<void>();
   workdaysCollection: AngularFirestoreCollection<WorkDay>;
   workdays$: Observable<WorkDay[]>;
+  showDeleteWorkdayModal = false;
+  toDeleteWorkday: WorkDay;
 
   constructor(private afs: AngularFirestore, private auth: AuthService) {
     this.workdays$ = auth.user$.pipe(switchMap(user => {
@@ -33,13 +36,25 @@ export class WorkdaysListComponent implements OnInit {
     this.workdaysCollection.doc(workdayId).set({
       uid: workdayId,
       ...workday
-    }).then(response => console.log(response)).catch(err => console.log(err));
+    }).then(response => this.closeForm.emit()).catch(err => console.log(err));
+  }
+
+  onShowModal(workday) {
+    this.toDeleteWorkday = workday;
+    this.showDeleteWorkdayModal = true;
+  }
+
+  onClose() {
+    this.toDeleteWorkday = null;
+    this.showDeleteWorkdayModal = false;
   }
 
   onDeleteWorkday(workday: WorkDay) {
     this.workdaysCollection.doc(workday.uid).delete()
       .then(() => console.log('Werkdag van ', workday.date, 'succesvol verwijderd!'))
       .catch(error => alert(error));
+
+    this.showDeleteWorkdayModal = false;
   }
 
   ngOnInit() {

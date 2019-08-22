@@ -1,4 +1,5 @@
 <app-navbar (toggleForm)="setToggleForm()"></app-navbar>
 
-<app-workdays-list [showForm]="showForm" *ngIf="auth.user$ | async as user;"></app-workdays-list>
+<app-workdays-list (closeForm)="setToggleForm()" [showForm]="showForm"
+                   *ngIf="auth.user$ | async as user;"></app-workdays-list>
 

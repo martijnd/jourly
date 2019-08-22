@@ -13,6 +13,8 @@ import {WorkdayComponent} from './workdays-list/workday/workday.component';
 import {WorkdayFormComponent} from './workdays-list/workday-form/workday-form.component';
 import {registerLocaleData} from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
+import {AlertComponent} from './shared/alert/alert.component';
+import {ModalComponent} from './shared/delete-modal/modal.component';
 
 registerLocaleData(localeNl, 'nl');
 
@@ -22,7 +24,9 @@ registerLocaleData(localeNl, 'nl');
     NavbarComponent,
     WorkdaysListComponent,
     WorkdayComponent,
-    WorkdayFormComponent
+    WorkdayFormComponent,
+    AlertComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
