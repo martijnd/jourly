@@ -32,7 +32,7 @@ export class WorkdayFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      date: new FormControl(null,),
+      date: new FormControl(null),
       description: new FormControl(null, Validators.required),
       category: new FormControl(null, Validators.required)
     });
