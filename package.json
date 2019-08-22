@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve & ngtw watch",
     "build": "ngtw build && ng build",
-    "build-ci": "ngtw build && ng build --prod --base-href https://martijnd.github.io/jourly/",
+    "build-ci": "ngtw build --purge && ng build --prod --base-href https://martijnd.github.io/jourly/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
