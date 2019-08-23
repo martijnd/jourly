@@ -15,6 +15,7 @@ import {registerLocaleData} from '@angular/common';
 import localeNl from '@angular/common/locales/nl';
 import {AlertComponent} from './shared/alert/alert.component';
 import {ModalComponent} from './shared/delete-modal/modal.component';
+import {HttpClientModule} from '@angular/common/http';
 
 registerLocaleData(localeNl, 'nl');
 
@@ -33,7 +34,8 @@ registerLocaleData(localeNl, 'nl');
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'jourly'),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
