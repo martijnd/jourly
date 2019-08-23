@@ -17,7 +17,7 @@ interface ICommitData {
 })
 export class NavbarComponent implements OnInit {
   @Output() toggleForm = new EventEmitter();
-  private loading = true;
+  loading = true;
   private gitHubApiUrl = 'https://api.github.com/repos/martijnd/jourly/commits';
 
   latestCommit$: Observable<ICommitData>;
@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
   getCommitData() {
     this.latestCommit$ = this.http.get<ICommitData>(this.gitHubApiUrl).pipe(map(value => {
         return {
-          sha: value[0].sha.substring(0, 8),
+          sha: value[0].sha.substring(0, 6),
           message: value[0].commit.message,
           url: value[0].html_url
         };
