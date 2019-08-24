@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {AuthService} from './services/auth.service';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {environment} from '../environments/environment';
+
 
 @Component({
   selector: 'app-root',
@@ -9,7 +12,18 @@ import {AuthService} from './services/auth.service';
 export class AppComponent {
   showForm = false;
 
+  searchConfig = {
+    ...environment.algolia,
+    indexName: 'jourly'
+  };
+
+  showResults = false;
+
   constructor(public auth: AuthService) {
+  }
+
+  searchchanged(query) {
+    this.showResults = !!query.length;
   }
 
 

@@ -1,5 +1,16 @@
 <app-navbar (toggleForm)="setToggleForm()"></app-navbar>
+<ais-instantsearch [config]="searchConfig">
+  <ais-search-box (change)="searchchanged($event)">
+    <ais-hits *ngIf="showResults">
+      <ng-template let-hits="hits">
+        <div *ngFor="let hit of hits">
+          <ais-highlight attribute="name" [hit]="hit"></ais-highlight>
+        </div>
+      </ng-template>
+    </ais-hits>
+  </ais-search-box>
 
+</ais-instantsearch>
 <app-workdays-list (closeForm)="setToggleForm()" [showForm]="showForm"
                    *ngIf="auth.user$ | async as user;"></app-workdays-list>
 

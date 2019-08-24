@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve & ngtw watch",
+    "start": "ng serve & ngtw watch & node server.js",
     "build": "ngtw build && ng build",
     "build-ci": "ngtw build --purge && ng build --prod --base-href https://martijnd.github.io/jourly/",
     "test": "ng test",
@@ -23,12 +23,15 @@
     "@angular/platform-browser": "~8.1.1",
     "@angular/platform-browser-dynamic": "~8.1.1",
     "@angular/router": "~8.1.1",
+    "angular-instantsearch": "^2.2.2",
     "dompurify": "^1.0.11",
     "firebase": "^6.4.0",
     "marked": "^0.7.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "express": "latest",
+    "algoliasearch": "latest"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.1",

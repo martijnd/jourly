@@ -8,5 +8,9 @@ export const environment = {
     storageBucket: '',
     messagingSenderId: '546910924781',
     appId: '1:546910924781:web:f83e688910ca3297'
+  },
+  algolia: {
+    appId: 'VVTA2UCGUJ',
+    apiKey: (window as any).SERVER_DATA_ALGOLIA_API_KEY
   }
 };

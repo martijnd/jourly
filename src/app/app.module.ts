@@ -16,6 +16,8 @@ import localeNl from '@angular/common/locales/nl';
 import {AlertComponent} from './shared/alert/alert.component';
 import {ModalComponent} from './shared/delete-modal/modal.component';
 import {HttpClientModule} from '@angular/common/http';
+import {NgAisModule} from 'angular-instantsearch';
+
 
 registerLocaleData(localeNl, 'nl');
 
@@ -35,7 +37,8 @@ registerLocaleData(localeNl, 'nl');
     AngularFireModule.initializeApp(environment.firebase, 'jourly'),
     AngularFirestoreModule,
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    NgAisModule
   ],
   providers: [],
   bootstrap: [AppComponent]
