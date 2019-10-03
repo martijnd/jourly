@@ -33,6 +33,9 @@ export class WorkdaysListComponent implements OnInit {
 
   addWorkday(workday: WorkDay) {
     const workdayId = this.afs.createId();
+    if (!workday.date) {
+      workday.date = new Date().toISOString().split('T')[0];
+    }
     this.workdaysCollection.doc(workdayId).set({
       uid: workdayId,
       ...workday
