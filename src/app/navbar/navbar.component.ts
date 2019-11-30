@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit {
     );
   }
 
-  onToggleForm() {
+  onAddWorkday() {
     this.toggleForm.emit();
   }
 

@@ -35,7 +35,6 @@ export class WorkdayFormComponent implements OnInit {
 
   ngOnInit() {
     this.workday = this.workdayService.currentEditingWorkday;
-    console.log(this.workday);
     if (!this.workday) {
       this.form = new FormGroup({
         date: new FormControl(null),

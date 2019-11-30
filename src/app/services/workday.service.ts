@@ -31,6 +31,9 @@ export class WorkdayService {
 
   addWorkday(workday: WorkDay): Promise<void> {
     const workdayId = this.afs.createId();
+    if (!workday.date) {
+      workday = {...workday, date: new Date().toISOString().split('T')[0]};
+    }
     return this.workdaysCollection.doc(workdayId).set({
       uid: workdayId,
       ...workday
@@ -38,7 +41,7 @@ export class WorkdayService {
   }
 
   editWorkday(workday: WorkDay) {
-    return this.workdaysCollection.doc(workday.uid).update(workday);
+    return this.workdaysCollection.doc(this.currentEditingWorkday.uid).update(workday);
   }
 
   deleteWorkday(workday: WorkDay) {

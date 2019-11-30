@@ -1,10 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {WorkDay} from '../services/workday.model';
-import {Observable, of} from 'rxjs';
-import {AuthService} from '../services/auth.service';
-import {User} from '../services/user.model';
-import {switchMap} from 'rxjs/operators';
+import {WorkDay} from '../shared/workday.model';
+import {WorkdayService} from '../services/workday.service';
 
 @Component({
   selector: 'app-workdays-list',
@@ -13,7 +9,6 @@ import {switchMap} from 'rxjs/operators';
 })
 export class WorkdaysListComponent implements OnInit {
   @Input() showForm;
-  @Output() closeForm = new EventEmitter<void>();
   workdays: WorkDay[] = [];
   showDeleteWorkdayModal = false;
   toDeleteWorkday: WorkDay;
@@ -25,13 +20,12 @@ export class WorkdaysListComponent implements OnInit {
   onSubmitForm(workday: WorkDay) {
     if (this.workdayService.currentEditingWorkday) {
       this.workdayService.editWorkday(workday).then(() => {
-        console.log('edited workday');
         this.workdayService.currentEditingWorkday = null;
-        this.closeForm.emit();
+        this.showForm = false;
       });
     } else {
       this.workdayService.addWorkday(workday)
-        .then(() => this.closeForm.emit()).catch(err => console.log(err));
+        .then(() => this.showForm = false).catch(err => console.log(err));
     }
   }
 

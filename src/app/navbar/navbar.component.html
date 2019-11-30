@@ -11,7 +11,7 @@
     </a>
     <button
       class="px-4 py-2 mr-4 rounded text-indigo-600 hover:shadow-xl bg-white hover:bg-indigo-100 focus:bg-indigo-200 font-semibold shadow border-b-4 border-indigo-400"
-      (click)="onToggleForm()">Nieuwe
+      (click)="onAddWorkday()">Nieuwe
       werkdag
     </button>
     <img *ngIf="auth.user$ | async as user; else notLoggedIn;" [src]="user.photoURL"
