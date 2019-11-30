@@ -1,10 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {WorkDay} from '../services/workday.model';
-import {Observable, of} from 'rxjs';
-import {AuthService} from '../services/auth.service';
-import {User} from '../services/user.model';
-import {switchMap} from 'rxjs/operators';
+import {WorkDay} from '../shared/workday.model';
+import {Observable} from 'rxjs';
+import {WorkdayService} from '../services/workday.service';
 
 @Component({
   selector: 'app-workdays-list',
@@ -14,32 +11,28 @@ import {switchMap} from 'rxjs/operators';
 export class WorkdaysListComponent implements OnInit {
   @Input() showForm;
   @Output() closeForm = new EventEmitter<void>();
-  workdaysCollection: AngularFirestoreCollection<WorkDay>;
-  workdays$: Observable<WorkDay[]>;
+  workdays: WorkDay[] = [];
   showDeleteWorkdayModal = false;
   toDeleteWorkday: WorkDay;
 
-  constructor(private afs: AngularFirestore, private auth: AuthService) {
-    this.workdays$ = auth.user$.pipe(switchMap(user => {
-      if (user) {
-        this.workdaysCollection = afs.doc<User>(`users/${user.uid}`).collection<WorkDay>('workdays', ref => ref.orderBy('date', 'desc'));
-        return this.workdaysCollection.valueChanges();
-      } else {
-        return of(null);
-      }
+  constructor(private readonly workdayService: WorkdayService) {
 
-    }));
   }
 
-  addWorkday(workday: WorkDay) {
-    const workdayId = this.afs.createId();
-    this.workdaysCollection.doc(workdayId).set({
-      uid: workdayId,
-      ...workday
-    }).then(response => this.closeForm.emit()).catch(err => console.log(err));
+  onSubmitForm(workday: WorkDay) {
+    if (this.workdayService.currentEditingWorkday) {
+      this.workdayService.editWorkday(workday).then(() => {
+        console.log('edited workday');
+        this.workdayService.currentEditingWorkday = null;
+        this.closeForm.emit();
+      });
+    } else {
+      this.workdayService.addWorkday(workday)
+        .then(() => this.closeForm.emit()).catch(err => console.log(err));
+    }
   }
 
-  onShowModal(workday) {
+  onShowDeleteModal(workday) {
     this.toDeleteWorkday = workday;
     this.showDeleteWorkdayModal = true;
   }
@@ -49,15 +42,23 @@ export class WorkdaysListComponent implements OnInit {
     this.showDeleteWorkdayModal = false;
   }
 
+  onEditWorkday(workday: WorkDay) {
+    this.workdayService.currentEditingWorkday = workday;
+    this.showForm = true;
+  }
+
   onDeleteWorkday(workday: WorkDay) {
-    this.workdaysCollection.doc(workday.uid).delete()
-      .then(() => console.log('Werkdag van ', workday.date, 'succesvol verwijderd!'))
+    this.workdayService.deleteWorkday(workday)
+      .then(() => console.log(`Werkdag van ${workday.date} succesvol verwijderd!`))
       .catch(error => alert(error));
 
     this.showDeleteWorkdayModal = false;
   }
 
   ngOnInit() {
+    this.workdayService.fetchWorkdays().subscribe((workdayList) => {
+      this.workdays = workdayList;
+    });
   }
 
 }

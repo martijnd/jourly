@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {WorkDay} from '../../services/workday.model';
+import {WorkDay} from '../workday.model';
 
 @Component({
   selector: 'app-modal',

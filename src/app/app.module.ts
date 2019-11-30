@@ -16,6 +16,7 @@ import localeNl from '@angular/common/locales/nl';
 import {AlertComponent} from './shared/alert/alert.component';
 import {ModalComponent} from './shared/delete-modal/modal.component';
 import {HttpClientModule} from '@angular/common/http';
+import {WorkdayService} from './services/workday.service';
 
 registerLocaleData(localeNl, 'nl');
 
@@ -37,7 +38,9 @@ registerLocaleData(localeNl, 'nl');
     AngularFireAuthModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    WorkdayService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
