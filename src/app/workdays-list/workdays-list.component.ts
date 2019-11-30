@@ -1,7 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {WorkDay} from '../shared/workday.model';
-import {Observable} from 'rxjs';
-import {WorkdayService} from '../services/workday.service';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {WorkDay} from '../services/workday.model';
+import {Observable, of} from 'rxjs';
+import {AuthService} from '../services/auth.service';
+import {User} from '../services/user.model';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-workdays-list',
